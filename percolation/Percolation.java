@@ -166,7 +166,7 @@ public class Percolation {
 
     // gets the underlying index corresponding to the grid cell
     private int getSite(int row, int col) {
-        return ((col-1) * size + (row));
+        return ((row-1) * size + (col));
     }
 
     // validates

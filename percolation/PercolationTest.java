@@ -88,6 +88,13 @@ public class PercolationTest {
     }
 
     @Test
+    public void testIsFullForInput6() {
+        percolation = new Percolation(6);
+        percolation.open(1,6);
+        Assert.assertTrue(percolation.isFull(1, 6));
+    }
+
+    @Test
     public void isOpenFalse() {
         Assert.assertFalse(percolation.isOpen(1, 1));
     }
@@ -112,9 +119,9 @@ public class PercolationTest {
     @Test
     public void testPercolatesSuccess() {
         percolation.open(1,1);
-        percolation.open(1,2);
-        percolation.open(1,3);
-        percolation.open(1,4);
+        percolation.open(2,1);
+        percolation.open(3,1);
+        percolation.open(4,1);
         Assert.assertTrue(percolation.percolates());
     }
 }
