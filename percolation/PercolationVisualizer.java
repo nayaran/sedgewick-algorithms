@@ -24,7 +24,7 @@ import java.awt.Font;
 public class PercolationVisualizer {
 
     // delay in miliseconds (controls animation speed)
-    private static final int DELAY = 100;
+    private static final int DELAY = 5;
 
     // draw n-by-n percolation system
     public static void draw(Percolation percolation, int n) {
@@ -37,10 +37,10 @@ public class PercolationVisualizer {
         // draw n-by-n grid
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
-                if (percolation.isFull(row, col)) {
+                if (percolation.isFull(row+1, col+1)) {
                     StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
                 }
-                else if (percolation.isOpen(row, col)) {
+                else if (percolation.isOpen(row+1, col+1)) {
                     StdDraw.setPenColor(StdDraw.WHITE);
                 }
                 else {
@@ -75,7 +75,7 @@ public class PercolationVisualizer {
         while (!in.isEmpty()) {
             int row = in.readInt();
             int col = in.readInt();
-            percolation.open(row, col);
+            percolation.open(row+1, col+1);
             draw(percolation, n);
             StdDraw.show();
             StdDraw.pause(DELAY);

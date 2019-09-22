@@ -45,10 +45,10 @@ public class InteractivePercolationVisualizer {
 
                 // open site (i, col) provided it's in bounds
                 if (row >= 0 && row < n && col >= 0 && col < n) {
-                    if (!percolation.isOpen(row, col)) {
-                        StdOut.println(row + " " + col);
+                    if (!percolation.isOpen(row+1, col+1)) {
+                        StdOut.println(row + 1 + " " + col + 1);
                     }
-                    percolation.open(row, col);
+                    percolation.open(row + 1, col + 1);
                 }
 
                 // draw n-by-n percolation system
