@@ -10,9 +10,6 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    // constant representing the number of neighbors
-    private static final int NEIGHBORS = 4;
-
     // models the underlying grid
     private final WeightedQuickUnionUF grid;
 
@@ -23,7 +20,7 @@ public class Percolation {
     private final boolean[] openedSites;
 
     // keeps count of opened sites
-    private int openedSitesCount;
+    private int openedSitesCount = 0;
 
     // first dummy site at index 0
     private int firstDummySite;
@@ -68,16 +65,47 @@ public class Percolation {
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
         validate(row, col);
-
-        // connect the site to its adjacent open sites
-        int[] adjOpenSites = getAdjacentOpenSites(row, col);
         int site = getSite(row, col);
 
-        for (int adjOpenSite : adjOpenSites) {
-            if (adjOpenSite != -1) {
-                grid.union(adjOpenSite, site);
+        if (isOpen(row, col)) {
+            return;
+        }
+
+        // connect the site to its adjacent open sites
+        int neighbor;
+
+        // LEFT
+        if (col - 1 >= 1) {
+            neighbor = getSite(row, col - 1);
+            if (openedSites[neighbor]) {
+                grid.union(neighbor, site);
             }
         }
+
+        // RIGHT
+        if (col + 1 <= size) {
+            neighbor = getSite(row, col + 1);
+            if (openedSites[neighbor]) {
+                grid.union(neighbor, site);
+            }
+        }
+
+        // DOWN
+        if (row - 1 >= 1) {
+            neighbor = getSite(row - 1, col);
+            if (openedSites[neighbor]) {
+                grid.union(neighbor, site);
+            }
+        }
+
+        // UP
+        if (row + 1 <= size) {
+            neighbor = getSite(row + 1, col);
+            if (openedSites[neighbor]) {
+                grid.union(neighbor, site);
+            }
+        }
+
         openedSites[site] = true;
         openedSitesCount++;
     }
@@ -108,60 +136,6 @@ public class Percolation {
         else {
             return grid.connected(firstDummySite, lastDummySite);
         }
-    }
-
-    // retrieves adjacent open sites
-    private int[] getAdjacentOpenSites(int row, int col) {
-        int[] adjOpenSites = new int[NEIGHBORS];
-
-        int[] adjSites = getAdjacentSites(row, col);
-
-        for (int i = 0; i < adjSites.length; i++) {
-            int adjSite = adjSites[i];
-            if (adjSite != -1 && openedSites[adjSite]) {
-                adjOpenSites[i] = adjSite;
-            }
-            else {
-                adjOpenSites[i] = -1;
-            }
-
-        }
-        return adjOpenSites;
-    }
-
-    // retrieves adjacent sites
-    private int[] getAdjacentSites(int row, int col) {
-        validate(row, col);
-        int[] adjacentSites = new int[NEIGHBORS];
-        // UP
-        if (col - 1 >= 1) {
-            adjacentSites[0] = getSite(row, col - 1);
-        }
-        else {
-            adjacentSites[0] = -1;
-        }
-        // DOWN
-        if (col + 1 <= size) {
-            adjacentSites[1] = getSite(row, col + 1);
-        }
-        else {
-            adjacentSites[1] = -1;
-        }
-        // LEFT
-        if (row - 1 >= 1) {
-            adjacentSites[2] = getSite(row - 1, col);
-        }
-        else {
-            adjacentSites[2] = -1;
-        }
-        // RIGHT
-        if (row + 1 <= size) {
-            adjacentSites[3] = getSite(row + 1, col);
-        }
-        else {
-            adjacentSites[3] = -1;
-        }
-        return adjacentSites;
     }
 
     // gets the underlying index corresponding to the grid cell

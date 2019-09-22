@@ -58,6 +58,7 @@ public class PercolationTest {
         Assert.assertTrue(percolation.percolates());
     }
 
+
     @Test
     public void testIsFullForinput2() {
         percolation = new Percolation(2);
@@ -100,7 +101,21 @@ public class PercolationTest {
     }
 
     @Test
-    public void isFull() {
+    public void testNumberOfOpenSites() {
+        percolation = new Percolation(6);
+        Assert.assertEquals(0, percolation.numberOfOpenSites());
+        percolation.open(1,6);
+        Assert.assertEquals(1, percolation.numberOfOpenSites());
+    }
+
+    @Test
+    public void testNumberOfOpenSitesWhenOpeningAlreadyOpenedSite() {
+        percolation = new Percolation(6);
+        percolation.open(1,1);
+        Assert.assertEquals(1, percolation.numberOfOpenSites());
+
+        percolation.open(1,1);
+        Assert.assertEquals(1, percolation.numberOfOpenSites());
     }
 
     @Test
