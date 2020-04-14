@@ -3,3 +3,5 @@
 */*.class
 */*/*.xml
 
+queues/META-INF/
+queues/submissions/
